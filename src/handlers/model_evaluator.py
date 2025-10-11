@@ -11,7 +11,8 @@ class ModelEvaluator:
 
     def list_models(self):
         """
-        Print the names of all trained models available for evaluation."""
+        Print the names of all trained models available for evaluation.
+        """
         print("\nTrained models:")
         for name in self.models.keys():
             print(f"- {name}")

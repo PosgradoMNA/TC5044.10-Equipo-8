@@ -1,7 +1,7 @@
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 
 
 class ModelTrainer:
@@ -22,7 +22,8 @@ class ModelTrainer:
 
     def list_models(self):
         """
-        Print the names of all currently available models for training."""
+        Print the names of all currently available models for training.
+        """
         print("\nCurrent models to train:")
         for name in self.models.keys():
             print(f"- {name}")
@@ -30,9 +31,6 @@ class ModelTrainer:
     def split_and_scale(self):
         """
         Split the dataset into training and testing sets and apply feature scaling.
-        
-        Separates features from target variables, performs train-test split,
-        and applies StandardScaler to normalize feature values.
         """
         X = self.df.drop(columns=self.target_cols)
         Y = self.df[self.target_cols]
@@ -47,10 +45,8 @@ class ModelTrainer:
 
     def train_models(self):
         """
-        Train Linear Regression and Random Forest models for each target variable.
-        
-        Creates separate models for heating_load and cooling_load predictions
-        using both Linear Regression and Random Forest algorithms.
+        Train Linear Regression, Random Forest, and Gradient Boosting models
+        for each target variable (heating_load and cooling_load).
         """
         # Linear Regression
         for target in self.target_cols:
@@ -69,5 +65,16 @@ class ModelTrainer:
             )
             rf.fit(self.X_train_scaled, self.Y_train[target])
             self.models[f"RandomForest_{target}"] = rf
+
+        # Gradient Boosting
+        for target in self.target_cols:
+            gb = GradientBoostingRegressor(
+                n_estimators=300,
+                learning_rate=0.08,
+                max_depth=4,
+                random_state=self.random_state,
+            )
+            gb.fit(self.X_train_scaled, self.Y_train[target])
+            self.models[f"GradientBoosting_{target}"] = gb
 
         print("Models trained successfully.")
