@@ -5,7 +5,7 @@ from handlers.data_loader import DataLoader
 from handlers.data_preprocessor import DataPreprocessor
 
 
-def main():
+def main(showVisualEDA: bool):
     data_loader = DataLoader()
 
     df = data_loader.getDataFrameFromFile("data/energy_efficiency_modified.csv")
@@ -21,11 +21,12 @@ def main():
 
     eda.overview()
 
-    print(f"\n\n > Initializing visual EDA...", "\n\n")
+    if showVisualEDA:
+        print(f"\n\n > Initializing visual EDA before processing...", "\n\n")
 
-    eda.plot_histograms()
-    eda.plot_boxplots()
-    eda.plot_correlation_heatmap()
+        eda.plot_histograms()
+        eda.plot_boxplots()
+        eda.plot_correlation_heatmap()
 
     print(f"\n\n > Initializing data cleansing...", "\n\n")
 
@@ -52,6 +53,12 @@ def main():
     evaluator = ModelEvaluator(trainer.models, trainer.X_test_scaled, trainer.Y_test)
     evaluator.evaluate_all()
 
+    if showVisualEDA:
+        print(f"\n\n > Initializing visual EDA after processing...", "\n\n")
+
+        eda.plot_histograms()
+        eda.plot_boxplots()
+        eda.plot_correlation_heatmap()
 
 if __name__ == "__main__":
-    main()
+    main(showVisualEDA=True)
