@@ -6,6 +6,12 @@ from handlers.data_preprocessor import DataPreprocessor
 
 
 def main(showVisualEDA: bool):
+    """
+    Execute the complete machine learning pipeline for energy efficiency analysis.
+    
+    Keyword arguments:
+    showVisualEDA -- whether to display visual exploratory data analysis plots (default False)
+    """
     data_loader = DataLoader()
 
     df = data_loader.getDataFrameFromFile("data/energy_efficiency_modified.csv")

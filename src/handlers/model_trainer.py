@@ -21,11 +21,19 @@ class ModelTrainer:
         self.models = {}
 
     def list_models(self):
+        """
+        Print the names of all currently available models for training."""
         print("\nCurrent models to train:")
         for name in self.models.keys():
             print(f"- {name}")
 
     def split_and_scale(self):
+        """
+        Split the dataset into training and testing sets and apply feature scaling.
+        
+        Separates features from target variables, performs train-test split,
+        and applies StandardScaler to normalize feature values.
+        """
         X = self.df.drop(columns=self.target_cols)
         Y = self.df[self.target_cols]
         self.X_train, self.X_test, self.Y_train, self.Y_test = train_test_split(
@@ -38,6 +46,12 @@ class ModelTrainer:
         )
 
     def train_models(self):
+        """
+        Train Linear Regression and Random Forest models for each target variable.
+        
+        Creates separate models for heating_load and cooling_load predictions
+        using both Linear Regression and Random Forest algorithms.
+        """
         # Linear Regression
         for target in self.target_cols:
             lr = LinearRegression()

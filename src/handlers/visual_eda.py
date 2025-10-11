@@ -7,6 +7,9 @@ class VisualEDA:
         self.df = df
 
     def overview(self):
+        """
+        Display comprehensive DataFrame information including structure, statistics, and missing values.
+        """
         print(f"\nCurrent dataframe data:", "\n")
         print(f"\n\tDataframe information:", "\n")
         print(self.df.info(), "\n")
@@ -16,6 +19,9 @@ class VisualEDA:
         print(self.df.isna().sum(), "\n")
 
     def plot_histograms(self):
+        """
+        Generate and display histograms for all numeric columns in the DataFrame.
+        """
         print(f"\nPlotting histograms...", "\n")
         numeric_cols = self.df.select_dtypes(include="number").columns
         self.df[numeric_cols].hist(bins=15, figsize=(15, 10))
@@ -24,6 +30,9 @@ class VisualEDA:
         plt.show()
 
     def plot_boxplots(self):
+        """
+        Create boxplots for all numeric columns to visualize distributions and outliers.
+        """
         print(f"\nPlotting boxplots...", "\n")
         numeric_cols = self.df.select_dtypes(include="number").columns
         n_cols = 3
@@ -40,6 +49,9 @@ class VisualEDA:
         plt.show()
 
     def plot_correlation_heatmap(self):
+        """
+        Display a correlation heatmap showing relationships between numeric variables.
+        """
         print(f"\nPlotting correlation heatmap...", "\n")
         plt.figure(figsize=(12, 8))
         corr = self.df.corr()

@@ -10,11 +10,23 @@ class ModelEvaluator:
         self.Y_test = Y_test
 
     def list_models(self):
+        """
+        Print the names of all trained models available for evaluation."""
         print("\nTrained models:")
         for name in self.models.keys():
             print(f"- {name}")
 
     def evaluate_model(self, y_true, y_pred, name):
+        """
+        Calculate and display regression metrics for a single model.
+
+        Keyword arguments:
+        y_true -- actual target values
+        y_pred -- predicted target values
+        name -- name of the model being evaluated
+
+        Returns tuple of (R², RMSE, MAE) metrics.
+        """
         rmse = np.sqrt(mean_squared_error(y_true, y_pred))
         mae = mean_absolute_error(y_true, y_pred)
         r2 = r2_score(y_true, y_pred)
@@ -22,6 +34,12 @@ class ModelEvaluator:
         return r2, rmse, mae
 
     def evaluate_all(self):
+        """
+        Evaluate all trained models and return results as a DataFrame.
+
+        Calculates R², RMSE, and MAE for each model and returns
+        a pandas DataFrame with all evaluation metrics.
+        """
         self.list_models()
         print("\nModel evaluation:\n")
         results = []

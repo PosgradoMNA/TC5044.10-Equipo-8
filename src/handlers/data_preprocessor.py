@@ -23,11 +23,21 @@ class DataPreprocessor:
         self.outliers = []
 
     def convert_numeric(self):
+        """
+        Convert specified columns to numeric float type.
+        
+        Converts all columns in NUMERIC_COLS to float, handling errors by coercing to NaN.
+        """
         print(f"\nConverting numeric values...", "\n")
         for col in self.NUMERIC_COLS:
             self.df[col] = pd.to_numeric(self.df[col], errors="coerce").astype(float)
 
     def impute_missing(self):
+        """
+        Fill missing values in numeric columns with their median values.
+        
+        Prints the number of missing values before and after imputation.
+        """
         print(f"\nInitializing imputation of values...", "\n")
 
         missing_before = self.df.isna().sum().sum()
@@ -40,6 +50,12 @@ class DataPreprocessor:
         print(f"\nMissing values after imputation: {missing_after}", "\n")
 
     def detect_outliers(self):
+        """
+        Detect and remove outliers using the Interquartile Range (IQR) method.
+        
+        Identifies outliers as values beyond 1.5 * IQR from Q1 and Q3.
+        Removes entire rows containing outliers and stores their indices.
+        """
         print(f"\nInitializing outlier analysis...", "\n")
         outlier_rows = set()
         for col in self.NUMERIC_COLS:
@@ -57,6 +73,11 @@ class DataPreprocessor:
         print(f"\nOutliers removed", "\n")
 
     def standardize(self):
+        """
+        Standardize numeric columns using StandardScaler.
+        
+        Applies z-score normalization to all numeric columns to have mean=0 and std=1.
+        """
         print(
             f"\nStandardized numeric columns using StandardScaler for the following columns: {self.NUMERIC_COLS}",
             "\n",
