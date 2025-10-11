@@ -1,6 +1,65 @@
-class DataPreprocessor():
-  """
-  @todo: Implement this class
-  """
-  def __init__(self):
-    pass
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+
+class DataPreprocessor:
+    NUMERIC_COLS = [
+        "relative_compactness",
+        "surface_area",
+        "wall_area",
+        "roof_area",
+        "overall_height",
+        "orientation",
+        "glazing_area",
+        "glazing_area_distribution",
+        "heating_load",
+        "cooling_load",
+        "mixed_type_col",
+    ]
+
+    def __init__(self, df):
+        self.df = df
+        self.outliers = []
+
+    def convert_numeric(self):
+        print(f"\nConverting numeric values...", "\n")
+        for col in self.NUMERIC_COLS:
+            self.df[col] = pd.to_numeric(self.df[col], errors="coerce").astype(float)
+
+    def impute_missing(self):
+        print(f"\nInitializing imputation of values...", "\n")
+
+        missing_before = self.df.isna().sum().sum()
+        print(f"\nMissing values before imputation: {missing_before}", "\n")
+
+        for col in self.NUMERIC_COLS:
+            self.df[col] = self.df[col].fillna(self.df[col].median())
+        missing_after = self.df.isna().sum().sum()
+
+        print(f"\nMissing values after imputation: {missing_after}", "\n")
+
+    def detect_outliers(self):
+        print(f"\nInitializing outlier analysis...", "\n")
+        outlier_rows = set()
+        for col in self.NUMERIC_COLS:
+            data = self.df[col].values
+            Q1 = np.percentile(data, 25)
+            Q3 = np.percentile(data, 75)
+            IQR = Q3 - Q1
+            lower = Q1 - 1.5 * IQR
+            upper = Q3 + 1.5 * IQR
+            outliers = np.where((data < lower) | (data > upper))[0]
+            outlier_rows.update(outliers)
+        self.outliers = list(outlier_rows)
+        print(f"\nRows detected as outliers: {len(self.outliers)}", "\n")
+        self.df.drop(index=self.outliers, inplace=True)
+        print(f"\nOutliers removed", "\n")
+
+    def standardize(self):
+        print(
+            f"\nStandardized numeric columns using StandardScaler for the following columns: {self.NUMERIC_COLS}",
+            "\n",
+        )
+        scaler = StandardScaler()
+        self.df[self.NUMERIC_COLS] = scaler.fit_transform(self.df[self.NUMERIC_COLS])
