@@ -208,3 +208,21 @@ __marimo__/
 
 # VS Code Settings
 .vscode/
+
+# macOS system files
+.DS_Store
+
+# Python venvs
+.venv/
+
+# DVC cache
+*.dvc
+.dvc/
+
+# Bytecode
+__pycache__/
+*.py[cod]
+
+# IDEs
+.vscode/
+.idea/

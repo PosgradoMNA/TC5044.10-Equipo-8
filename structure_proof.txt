@@ -1,0 +1,32 @@
+.
+├── README.md
+├── data
+│   ├── interim
+│   ├── processed
+│   └── raw
+├── models
+├── notebooks
+├── requirements.txt
+├── src
+│   ├── __init__.py
+│   ├── data
+│   │   ├── cleansed
+│   │   └── energy_efficiency_modified.csv.dvc
+│   ├── energy_predictor
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   ├── data
+│   │   ├── features
+│   │   ├── models
+│   │   └── utils
+│   ├── handlers
+│   │   ├── data_loader.py
+│   │   ├── data_preprocessor.py
+│   │   ├── model_evaluator.py
+│   │   ├── model_trainer.py
+│   │   └── visual_eda.py
+│   └── main.py
+├── structure_proof.txt
+└── tests
+
+18 directories, 12 files
