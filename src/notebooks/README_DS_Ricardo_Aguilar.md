@@ -2,7 +2,7 @@
 **Autor:** Ricardo Aguilar  
 **Rol:** Data Scientist  
 **Branch:** `ricardo-datascientist`  
-**Archivo asociado:** `run_experiments_ricardo.py`
+**Archivo asociado:** `Run_Experiments_DS_Ricardo_Aguilar.py`
 
 ---
 
