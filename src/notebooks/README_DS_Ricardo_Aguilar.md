@@ -33,11 +33,14 @@ El objetivo fue ejecutar y registrar experimentos utilizando **MLflow**, validan
 
 ---
 
+
 ## Resultados observados
 | Modelo | R² aproximado | Observaciones |
-|:-------|:--------------|:--------------|
-| Linear Regression | 0.88 | Modelo sencillo y fácil de interpretar, pero limitado ante relaciones no lineales. |
-| Random Forest | 0.94 | Mejor ajuste y generalización; captura interacciones más complejas entre variables. |
+|:-------|:---------------:|:--------------|
+| **Linear Regression** | 0.97 | Modelo base sencillo y transparente; útil como línea de referencia, aunque limitado para capturar relaciones no lineales. |
+| **Random Forest** | 0.988 | Presenta un mejor ajuste y generalización; logra capturar interacciones complejas entre variables sin sobreajustar. |
+| **Gradient Boosting** | 0.991 | Ofrece el desempeño más alto; optimiza errores residuales de modelos previos, pero requiere mayor costo computacional. |
+
 
 ---
 
