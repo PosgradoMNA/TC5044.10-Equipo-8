@@ -1,21 +1,11 @@
 import pandas as pd
 from pathlib import Path
 import subprocess
+from .config import RAW_DATA_DIR, PROCESSED_DATA_DIR, RAW_DATA_FILE, PROCESSED_DATA_FILE, NAMING_MAP
 
 
 class DataLoader:
-    NAMING_MAP = {
-        "X1": "relative_compactness",
-        "X2": "surface_area",
-        "X3": "wall_area",
-        "X4": "roof_area",
-        "X5": "overall_height",
-        "X6": "orientation",
-        "X7": "glazing_area",
-        "X8": "glazing_area_distribution",
-        "Y1": "heating_load",
-        "Y2": "cooling_load",
-    }
+    NAMING_MAP = NAMING_MAP
 
     def getBaseDir(self):
         """
@@ -34,7 +24,7 @@ class DataLoader:
         
         Returns a DataFrame with columns renamed according to NAMING_MAP.
         """
-        file_path = self.getBaseDir().parent / route_to_file
+        file_path = Path(route_to_file)
         df = pd.read_csv(file_path)
         print(f"\nSuccesfully loaded DF from {file_path}...", "\n")
         return df.rename(columns=self.NAMING_MAP, inplace=False)
@@ -50,7 +40,7 @@ class DataLoader:
         
         Creates the directory if it doesn't exist and adds the file to DVC tracking.
         """
-        folder_path = self.getBaseDir().parent / route
+        folder_path = Path(route)
         folder_path.mkdir(parents=True, exist_ok=True)
         file_path = folder_path / file_name
         df.to_csv(file_path, index=False)
@@ -58,3 +48,9 @@ class DataLoader:
 
         print("\nInitializing DVC versioning...", "\n")
         subprocess.run(["dvc", "add", str(file_path)], check=True)
+
+
+if __name__ == "__main__":
+    data_loader = DataLoader()
+    df = data_loader.getDataFrameFromFile(RAW_DATA_DIR / RAW_DATA_FILE)
+    print(f"Dataset loaded with shape: {df.shape}")

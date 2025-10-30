@@ -1,22 +1,11 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+from .config import NUMERIC_COLS
 
 
 class DataPreprocessor:
-    NUMERIC_COLS = [
-        "relative_compactness",
-        "surface_area",
-        "wall_area",
-        "roof_area",
-        "overall_height",
-        "orientation",
-        "glazing_area",
-        "glazing_area_distribution",
-        "heating_load",
-        "cooling_load",
-        "mixed_type_col",
-    ]
+    NUMERIC_COLS = NUMERIC_COLS
 
     def __init__(self, df):
         self.df = df
