@@ -53,7 +53,7 @@ def main():
         mlflow.log_param("algorithm", "RandomForest")
         mlflow.log_param("n_estimators", 600)
 
-    print("\n✅ Experimentos completados y registrados en MLflow con éxito.")
+    print("\n Experimentos completados y registrados en MLflow con éxito.")
 
 if __name__ == "__main__":
     main()
