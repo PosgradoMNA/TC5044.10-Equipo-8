@@ -38,7 +38,6 @@ def main(showVisualEDA: bool):
 
     data_preprocessor.impute_missing()
     data_preprocessor.detect_outliers()
-    data_preprocessor.standardize()
 
     print(f"\n\n > Data overview after cleansing...", "\n\n")
 
@@ -51,12 +50,14 @@ def main(showVisualEDA: bool):
     print(f"\n\n > Initializing model training...", "\n\n")
 
     trainer = ModelTrainer(data_preprocessor.df)
-    trainer.split_and_scale()
+    trainer.split_data()
     trainer.train_models()
 
     print(f"\n\n > Initializing model evaluation...", "\n\n")
 
-    evaluator = ModelEvaluator(trainer.models, trainer.X_test_scaled, trainer.Y_test)
+    evaluator = ModelEvaluator(
+        trainer.models, trainer.X_test, trainer.Y_test, trainer.validation_reports
+    )
     evaluator.evaluate_all()
 
     if showVisualEDA:
