@@ -1,4 +1,6 @@
 import pandas as pd
+import mlflow
+import mlflow.sklearn
 from sklearn.base import clone
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
@@ -8,6 +10,7 @@ from sklearn.model_selection import cross_validate, train_test_split
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer, StandardScaler
+from ..config import MLFLOW_EXPERIMENT_NAME, MLFLOW_TRACKING_URI
 
 
 class ModelTrainer:
@@ -28,6 +31,10 @@ class ModelTrainer:
         ]
         self.models = {}
         self.validation_reports = {}
+
+        # We need to setup MLflow at the beginning of the trainer execution:
+        mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+        mlflow.set_experiment(MLFLOW_EXPERIMENT_NAME)
 
     def list_models(self):
         """
@@ -130,30 +137,42 @@ class ModelTrainer:
         }
 
         for name, estimator in base_estimators.items():
-            pipeline = Pipeline(
-                steps=[
-                    ("preprocessor", clone(preprocessor)),
-                    ("model", self._wrap_estimator(estimator)),
-                ]
-            )
-            pipeline.fit(self.X_train, self.Y_train)
-            self.models[name] = pipeline
+            with mlflow.start_run(run_name=name):
+                pipeline = Pipeline(
+                    steps=[
+                        ("preprocessor", clone(preprocessor)),
+                        ("model", self._wrap_estimator(estimator)),
+                    ]
+                )
+                pipeline.fit(self.X_train, self.Y_train)
+                self.models[name] = pipeline
 
-            cv = cross_validate(
-                pipeline,
-                self.X_train,
-                self.Y_train,
-                cv=5,
-                scoring=scoring,
-            )
-            metrics_summary = {}
-            for metric in scoring.keys():
-                metric_scores = cv[f"test_{metric}"]
-                score_mean = metric_scores.mean()
-                if metric in {"rmse", "mae"}:
-                    metrics_summary[metric] = abs(score_mean)
-                else:
-                    metrics_summary[metric] = score_mean
-            self.validation_reports[name] = metrics_summary
+                mlflow.log_param("test_size", self.test_size)
+                mlflow.log_param("random_state", self.random_state)
+                mlflow.log_param("n_features", len(self.feature_cols))
+                mlflow.log_param("n_samples", len(self.X_train))
+
+                cv = cross_validate(
+                    pipeline,
+                    self.X_train,
+                    self.Y_train,
+                    cv=5,
+                    scoring=scoring,
+                )
+
+                metrics_summary = {}
+                for metric in scoring.keys():
+                    metric_scores = cv[f"test_{metric}"]
+                    score_mean = metric_scores.mean()
+                    if metric in {"rmse", "mae"}:
+                        metrics_summary[metric] = abs(score_mean)
+                        mlflow.log_metric(f"cv_{metric}", abs(score_mean))
+                    else:
+                        metrics_summary[metric] = score_mean
+                        mlflow.log_metric(f"cv_{metric}", score_mean)
+
+                self.validation_reports[name] = metrics_summary
+
+                mlflow.sklearn.log_model(pipeline, "model")
 
         print("Pipelines trained and validated successfully.")

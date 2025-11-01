@@ -48,3 +48,7 @@ NUMERIC_COLS = [
     "cooling_load",
     "mixed_type_col",
 ]
+
+# MLflow configuration
+MLFLOW_EXPERIMENT_NAME = "energy_efficiency_models"
+MLFLOW_TRACKING_URI = "./mlruns"

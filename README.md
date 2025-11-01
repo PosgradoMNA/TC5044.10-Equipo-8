@@ -134,3 +134,30 @@ make pipeline_local       # Run pipeline without S3 sync
 ## Target Variables
 - `heating_load`: Building heating energy requirements
 - `cooling_load`: Building cooling energy requirements
+
+## MLflow Experiment Tracking
+
+### View Experiments
+```bash
+make pipeline             # Run full pipeline + auto-start MLflow UI
+make mlflow_ui            # Start MLflow UI only (view existing experiments)
+# Open http://127.0.0.1:5000 in your browser
+```
+
+### What's Tracked
+- **Parameters**: test_size, random_state, n_features, n_samples
+- **Metrics**: Cross-validation R², RMSE, MAE for each model
+- **Models**: Serialized scikit-learn pipelines
+- **Artifacts**: Model files for deployment
+
+### Compare Models
+The MLflow UI shows:
+- Model performance comparison
+- Parameter impact analysis  
+- Model versioning and deployment
+
+### Access MLflow UI
+1. Run the pipeline: `make pipeline`
+2. MLflow UI will automatically open at: **http://localhost:5000**
+3. Browse experiments and compare model performance
+4. Press `Ctrl+C` in terminal to stop the UI server

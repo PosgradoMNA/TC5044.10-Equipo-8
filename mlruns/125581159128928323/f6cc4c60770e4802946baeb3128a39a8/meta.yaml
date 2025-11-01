@@ -1,0 +1,14 @@
+artifact_uri: /Users/cesarivp/Documents/GitHub/TC5044.10-Equipo-8/mlruns/125581159128928323/f6cc4c60770e4802946baeb3128a39a8/artifacts
+end_time: 1762028307913
+entry_point_name: ''
+experiment_id: '125581159128928323'
+lifecycle_stage: active
+run_id: f6cc4c60770e4802946baeb3128a39a8
+run_name: LinearRegression
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762028303927
+status: 3
+tags: []
+user_id: cesarivp
