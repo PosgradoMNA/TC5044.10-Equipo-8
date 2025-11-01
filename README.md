@@ -15,22 +15,58 @@ source env/bin/activate  # On Windows: env\Scripts\activate
 ### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
+pip install "dvc[s3]"
 ```
 
-### 3. Download Dataset
-1. Download the Energy Efficiency dataset from: https://experiencia21.tec.mx/courses/624720/pages/datasets-por-equipos (team 8)
-2. Extract the CSV file and rename it to `energy_efficiency_modified.csv`
-3. Place it in the `data/raw/` folder
+### 3. Configure AWS (Team Members Only)
+```bash
+# Configure your team profile (replace X with your team number)
+aws configure --profile equipoX
+# Enter your AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, region: us-east-2, format: json
+```
 
-### 4. Run the Pipeline
+### 4. Pull Data from S3
+```bash
+# Pull latest datasets from team S3 bucket
+python -m dvc pull
+```
+
+### 5. Run the Pipeline
 ```bash
 make pipeline
 ```
 
-Or directly:
+### 6. Push Changes to S3 (After Processing)
 ```bash
-python -m energy_efficiency.modeling.train
+# Automatically saves processed data and pushes to S3
+python -m dvc push
+git add data/processed/energy_efficiency_modified.csv.dvc
+git commit -m "Update processed data"
 ```
+
+## Automated Workflow
+
+### Full Pipeline (Recommended)
+```bash
+make pipeline
+```
+This command automatically:
+1. Pulls latest data from S3 (`dvc pull`)
+2. Runs the complete ML pipeline
+3. Pushes processed results back to S3 (`dvc push`)
+
+### Individual Commands
+```bash
+make sync_data_from_s3    # Pull data from S3
+make sync_data_to_s3      # Push data to S3  
+make pipeline_local       # Run pipeline without S3 sync
+```
+
+### Team Collaboration Workflow
+1. **Start work**: `make sync_data_from_s3` (get latest data)
+2. **Run pipeline**: `make pipeline_local` (process locally)
+3. **Share results**: `make sync_data_to_s3` (push to S3)
+4. **Commit changes**: `git add *.dvc && git commit -m "Update data"`
 
 ## Project Structure
 ```
