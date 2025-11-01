@@ -2,7 +2,7 @@
 Energy Efficiency Analysis - Machine Learning Pipeline
 
 ## Overview
-This project implements a complete machine learning pipeline for analyzing energy efficiency in buildings. It includes data preprocessing, exploratory data analysis, model training, and evaluation using Linear Regression and Random Forest algorithms.
+This project implements a complete machine learning pipeline for analyzing energy efficiency in buildings. It now leverages scikit-learn Pipelines to automate preprocessing, model training, and evaluation with Linear Regression, Random Forest, and Gradient Boosting regressors.
 
 ## Setup Instructions
 
@@ -37,22 +37,23 @@ src/
 ├── handlers/
 │   ├── data_loader.py         # Data loading and saving
 │   ├── data_preprocessor.py   # Data cleaning and preprocessing
-│   ├── model_trainer.py       # Model training
-│   ├── model_evaluator.py     # Model evaluation
+│   ├── model_trainer.py       # Pipeline creation, training and validation
+│   ├── model_evaluator.py     # Pipeline evaluation on the hold-out set
 │   └── visual_eda.py          # Exploratory data analysis
 ```
 
 ## Features
-- **Data Loading**: CSV loading with column renaming
-- **Data Preprocessing**: Missing value imputation, outlier detection, standardization
+- **Data Loading**: CSV loading with consistent column renaming
+- **Data Preprocessing**: Type coercion, robust outlier handling, and automatic imputation/scaling encoded inside scikit-learn Pipelines
 - **Visual EDA**: Histograms, boxplots, correlation heatmaps
-- **Model Training**: Linear Regression and Random Forest
-- **Model Evaluation**: R², RMSE, MAE metrics
+- **Model Training**: Linear Regression, Random Forest, and Gradient Boosting, all trained through reusable Pipelines
+- **Model Evaluation**: Hold-out metrics (R², RMSE, MAE) plus 5-fold cross-validation summaries
 - **Version Control**: DVC integration for data versioning
 
 ## Models
-- **Linear Regression**: For heating and cooling load prediction
+- **Linear Regression**: Baseline multi-output regressor
 - **Random Forest**: Ensemble method with 600 estimators
+- **Gradient Boosting**: Gradient-boosted trees with tuned learning rate and depth
 
 ## Target Variables
 - `heating_load`: Building heating energy requirements
