@@ -1,7 +1,7 @@
-import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from .config import NUMERIC_COLS
+import pandas as pd
 
 
 class DataPreprocessor:
@@ -48,28 +48,18 @@ class DataPreprocessor:
         print(f"\nInitializing outlier analysis...", "\n")
         outlier_rows = set()
         for col in self.NUMERIC_COLS:
-            data = self.df[col].values
-            Q1 = np.percentile(data, 25)
-            Q3 = np.percentile(data, 75)
+            column_data = self.df[col]
+            valid_data = column_data.dropna().values
+            if valid_data.size == 0:
+                continue
+            Q1 = np.percentile(valid_data, 25)
+            Q3 = np.percentile(valid_data, 75)
             IQR = Q3 - Q1
             lower = Q1 - 1.5 * IQR
             upper = Q3 + 1.5 * IQR
-            outliers = np.where((data < lower) | (data > upper))[0]
+            outliers = column_data[(column_data < lower) | (column_data > upper)].index
             outlier_rows.update(outliers)
-        self.outliers = list(outlier_rows)
+        self.outliers = list(sorted(outlier_rows))
         print(f"\nRows detected as outliers: {len(self.outliers)}", "\n")
         self.df.drop(index=self.outliers, inplace=True)
         print(f"\nOutliers removed", "\n")
-
-    def standardize(self):
-        """
-        Standardize numeric columns using StandardScaler.
-        
-        Applies z-score normalization to all numeric columns to have mean=0 and std=1.
-        """
-        print(
-            f"\nStandardized numeric columns using StandardScaler for the following columns: {self.NUMERIC_COLS}",
-            "\n",
-        )
-        scaler = StandardScaler()
-        self.df[self.NUMERIC_COLS] = scaler.fit_transform(self.df[self.NUMERIC_COLS])
