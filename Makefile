@@ -1,4 +1,4 @@
-.PHONY: data train clean requirements
+.PHONY: data train clean requirements sync_data_from_s3 sync_data_to_s3
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -16,6 +16,15 @@ PYTHON_INTERPRETER = python
 requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
+	$(PYTHON_INTERPRETER) -m pip install "dvc[s3]"
+
+## Download data from S3
+sync_data_from_s3:
+	$(PYTHON_INTERPRETER) -m dvc pull
+
+## Upload data to S3
+sync_data_to_s3:
+	$(PYTHON_INTERPRETER) -m dvc push
 
 ## Make Dataset
 data:
@@ -34,9 +43,14 @@ clean:
 # PROJECT RULES                                                                #
 #################################################################################
 
-## Make complete pipeline
-pipeline:
-	$(PYTHON_INTERPRETER) -c "from energy_efficiency.main import main; main(showVisualEDA=True)"
+## Make complete pipeline (pull data, process, train, push results)
+pipeline: sync_data_from_s3
+	$(PYTHON_INTERPRETER) -m energy_efficiency.main
+	$(PYTHON_INTERPRETER) -m dvc push
+
+## Quick pipeline without S3 sync
+pipeline_local:
+	$(PYTHON_INTERPRETER) -m energy_efficiency.main
 
 #################################################################################
 # Self Documenting Commands                                                     #
