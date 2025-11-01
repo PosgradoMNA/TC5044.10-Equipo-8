@@ -1,0 +1,22 @@
+{
+  "experiment": "Energy Efficiency – Ricardo Aguilar",
+  "model": "LinearRegression",
+  "params": {},
+  "data": {
+    "source": "src/data/energy_efficiency_modified.csv",
+    "target": "heating_load",
+    "train_size": 0.8,
+    "test_size": 0.2,
+    "random_state": 42
+  },
+  "metrics": {
+    "R2": 0.972,
+    "MAE": 0.105,
+    "RMSE": 0.154
+  },
+  "run": {
+    "author": "Ricardo Aguilar",
+    "date": "2025-11-01",
+    "branch": "ricardo-datascientist"
+  }
+}
