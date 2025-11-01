@@ -76,6 +76,4 @@ class ModelEvaluator:
                     f"  -> CV mean scores | R²: {val['r2']:.4f} | "
                     f"RMSE: {val['rmse']:.4f} | MAE: {val['mae']:.4f}"
                 )
-        return pd.DataFrame(
-            results, columns=["Model", "Target", "R2", "RMSE", "MAE"]
-        )
+        return pd.DataFrame(results, columns=["Model", "Target", "R2", "RMSE", "MAE"])

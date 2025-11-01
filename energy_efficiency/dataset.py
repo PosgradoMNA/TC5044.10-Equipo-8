@@ -1,16 +1,14 @@
 import pandas as pd
 from pathlib import Path
 import subprocess
-from .config import RAW_DATA_DIR, PROCESSED_DATA_DIR, RAW_DATA_FILE, PROCESSED_DATA_FILE, NAMING_MAP
+from .config import RAW_DATA_DIR, RAW_DATA_FILE, NAMING_MAP
 
 
 class DataLoader:
-    NAMING_MAP = NAMING_MAP
-
     def getBaseDir(self):
         """
         Get the base directory path for the current file.
-        
+
         Returns the parent directory of the current file as a Path object.
         """
         return Path(__file__).resolve().parent
@@ -18,26 +16,26 @@ class DataLoader:
     def getDataFrameFromFile(self, route_to_file: str):
         """
         Load a CSV file and return a pandas DataFrame with renamed columns.
-        
+
         Keyword arguments:
         route_to_file -- relative path to the CSV file from the base directory
-        
+
         Returns a DataFrame with columns renamed according to NAMING_MAP.
         """
         file_path = Path(route_to_file)
         df = pd.read_csv(file_path)
         print(f"\nSuccesfully loaded DF from {file_path}...", "\n")
-        return df.rename(columns=self.NAMING_MAP, inplace=False)
+        return df.rename(columns=NAMING_MAP, inplace=False)
 
     def saveDataFrameAsFileWithDVC(self, df: pd.DataFrame, route: str, file_name: str):
         """
         Save a DataFrame to CSV file and add it to DVC version control.
-        
+
         Keyword arguments:
         df -- pandas DataFrame to save
         route -- directory path where to save the file
         file_name -- name of the CSV file to create
-        
+
         Creates the directory if it doesn't exist and adds the file to DVC tracking.
         """
         folder_path = Path(route)
