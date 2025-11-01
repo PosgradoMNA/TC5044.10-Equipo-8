@@ -1,0 +1,10 @@
+artifact_location: /Users/cesarivp/Documents/GitHub/TC5044.10-Equipo-8/mlruns/125581159128928323/models/m-924df6fa7a9440b59b0a98c074b52f87/artifacts
+creation_timestamp: 1762028318196
+experiment_id: '125581159128928323'
+last_updated_timestamp: 1762028321168
+model_id: m-924df6fa7a9440b59b0a98c074b52f87
+model_type: null
+name: model
+source_run_id: 1239d378ae224b5dad1975630ebd72f5
+status: 2
+status_message: null

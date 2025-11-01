@@ -34,9 +34,12 @@ clean:
 # PROJECT RULES                                                                #
 #################################################################################
 
-## Make complete pipeline
+## Make complete pipeline (with MLflow UI)
 pipeline:
-	$(PYTHON_INTERPRETER) -c "from energy_efficiency.main import main; main(showVisualEDA=True)"
+	$(PYTHON_INTERPRETER) -m energy_efficiency.main
+	@echo "Pipeline complete! Starting MLflow UI..."
+	@echo "Open http://127.0.0.1:5000 in your browser"
+	mlflow ui --backend-store-uri ./mlruns --host 127.0.0.1 --port 5000
 
 #################################################################################
 # Self Documenting Commands                                                     #
@@ -55,3 +58,6 @@ export PRINT_HELP_PYSCRIPT
 
 help:
 	@$(PYTHON_INTERPRETER) -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
+## Start MLflow UI
+mlflow_ui:
+	mlflow ui --backend-store-uri ./mlruns
