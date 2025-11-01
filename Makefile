@@ -36,7 +36,7 @@ clean:
 
 ## Make complete pipeline
 pipeline:
-	$(PYTHON_INTERPRETER) -c "from energy_efficiency.modeling.train import main; main(showVisualEDA=True)"
+	$(PYTHON_INTERPRETER) -c "from energy_efficiency.main import main; main(showVisualEDA=True)"
 
 #################################################################################
 # Self Documenting Commands                                                     #
