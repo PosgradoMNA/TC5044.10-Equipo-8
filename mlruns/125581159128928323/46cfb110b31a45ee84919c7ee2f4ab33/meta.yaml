@@ -1,0 +1,14 @@
+artifact_uri: /Users/cesarivp/Documents/GitHub/TC5044.10-Equipo-8/mlruns/125581159128928323/46cfb110b31a45ee84919c7ee2f4ab33/artifacts
+end_time: 1762029282535
+entry_point_name: ''
+experiment_id: '125581159128928323'
+lifecycle_stage: active
+run_id: 46cfb110b31a45ee84919c7ee2f4ab33
+run_name: RandomForest
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762029273899
+status: 3
+tags: []
+user_id: cesarivp

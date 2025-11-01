@@ -30,12 +30,28 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
+## Download data from S3
+sync_data_from_s3:
+	$(PYTHON_INTERPRETER) -m dvc pull
+
+## Upload data to S3
+sync_data_to_s3:
+	$(PYTHON_INTERPRETER) -m dvc push
+
 #################################################################################
 # PROJECT RULES                                                                #
 #################################################################################
 
-## Make complete pipeline (with MLflow UI)
-pipeline:
+## Make complete pipeline (pull data, process, train, push results)
+pipeline: sync_data_from_s3
+	$(PYTHON_INTERPRETER) -m energy_efficiency.main
+	$(PYTHON_INTERPRETER) -m dvc push
+	@echo "Pipeline complete! Starting MLflow UI..."
+	@echo "Open http://127.0.0.1:5000 in your browser"
+	mlflow ui --backend-store-uri ./mlruns --host 127.0.0.1 --port 5000
+
+## Quick pipeline without S3 sync
+pipeline_local:
 	$(PYTHON_INTERPRETER) -m energy_efficiency.main
 	@echo "Pipeline complete! Starting MLflow UI..."
 	@echo "Open http://127.0.0.1:5000 in your browser"

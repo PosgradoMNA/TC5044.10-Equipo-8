@@ -1,0 +1,22 @@
+artifact_path: /Users/cesarivp/Documents/GitHub/TC5044.10-Equipo-8/mlruns/125581159128928323/models/m-9838ff449ab44727b101b7b54802adf9/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.5.1
+model_id: m-9838ff449ab44727b101b7b54802adf9
+model_size_bytes: 1373687
+model_uuid: m-9838ff449ab44727b101b7b54802adf9
+prompts: null
+run_id: 34d023eca30046bd8fce8c84f3cf560b
+utc_time_created: '2025-11-01 20:33:24.422493'
