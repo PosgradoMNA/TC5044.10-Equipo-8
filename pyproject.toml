@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+
+[project]
+name = "energy_efficiency"
+authors = [
+    {name = "TC5044.10-Equipo-8"},
+]
+description = "Energy Efficiency Analysis - Machine Learning Pipeline"
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["machine learning", "energy efficiency", "data science"]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "numpy==2.3.3",
+    "pandas==2.3.3", 
+    "matplotlib==3.10.7",
+    "seaborn==0.13.2",
+    "scikit-learn==1.7.2",
+    "dvc==3.63.0"
+]
+dynamic = ["version"]
+
+[tool.setuptools_scm]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']

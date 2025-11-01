@@ -1,20 +1,26 @@
-from handlers.model_evaluator import ModelEvaluator
-from handlers.model_trainer import ModelTrainer
-from handlers.visual_eda import VisualEDA
-from handlers.data_loader import DataLoader
-from handlers.data_preprocessor import DataPreprocessor
+from energy_efficiency.config import (
+    PROCESSED_DATA_DIR,
+    PROCESSED_DATA_FILE,
+    RAW_DATA_DIR,
+    RAW_DATA_FILE,
+)
+from energy_efficiency.dataset import DataLoader
+from energy_efficiency.features import DataPreprocessor
+from energy_efficiency.modeling.predict import ModelEvaluator
+from energy_efficiency.modeling.train import ModelTrainer
+from energy_efficiency.plots import VisualEDA
 
 
 def main(showVisualEDA: bool):
     """
     Execute the complete machine learning pipeline for energy efficiency analysis.
-    
+
     Keyword arguments:
     showVisualEDA -- whether to display visual exploratory data analysis plots (default False)
     """
     data_loader = DataLoader()
 
-    df = data_loader.getDataFrameFromFile("data/energy_efficiency_modified.csv")
+    df = data_loader.getDataFrameFromFile(RAW_DATA_DIR / RAW_DATA_FILE)
 
     print(f"\n\n > Lodaded data - Rows: {df.shape[0]}, Columns: {df.shape[1]}", "\n\n")
 
@@ -44,7 +50,7 @@ def main(showVisualEDA: bool):
     eda.overview()
 
     data_loader.saveDataFrameAsFileWithDVC(
-        data_preprocessor.df, "data/cleansed", "energy_efficiency_modified.csv"
+        data_preprocessor.df, PROCESSED_DATA_DIR, PROCESSED_DATA_FILE
     )
 
     print(f"\n\n > Initializing model training...", "\n\n")
@@ -66,6 +72,7 @@ def main(showVisualEDA: bool):
         eda.plot_histograms()
         eda.plot_boxplots()
         eda.plot_correlation_heatmap()
+
 
 if __name__ == "__main__":
     main(showVisualEDA=True)

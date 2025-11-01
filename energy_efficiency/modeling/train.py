@@ -23,7 +23,9 @@ class ModelTrainer:
         self.test_size = test_size
         self.random_state = random_state
         self.X_train = self.X_test = self.Y_train = self.Y_test = None
-        self.feature_cols = [col for col in self.df.columns if col not in self.target_cols]
+        self.feature_cols = [
+            col for col in self.df.columns if col not in self.target_cols
+        ]
         self.models = {}
         self.validation_reports = {}
 
@@ -81,7 +83,9 @@ class ModelTrainer:
         Ensure the estimator can handle multi-output regression problems.
         """
         # Some regressors (e.g., GradientBoostingRegressor) need explicit multi-output support.
-        if getattr(estimator, "_get_tags", None) and estimator._get_tags().get("multioutput", False):
+        if getattr(estimator, "_get_tags", None) and estimator._get_tags().get(
+            "multioutput", False
+        ):
             return estimator
         return MultiOutputRegressor(estimator)
 
