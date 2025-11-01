@@ -1,0 +1,25 @@
+{
+  "experiment": "Energy Efficiency – Ricardo Aguilar",
+  "model": "RandomForestRegressor",
+  "params": {
+    "n_estimators": 600,
+    "random_state": 42
+  },
+  "data": {
+    "source": "src/data/energy_efficiency_modified.csv",
+    "target": "heating_load",
+    "train_size": 0.8,
+    "test_size": 0.2,
+    "random_state": 42
+  },
+  "metrics": {
+    "R2": 0.988,
+    "MAE": 0.052,
+    "RMSE": 0.098
+  },
+  "run": {
+    "author": "Ricardo Aguilar",
+    "date": "2025-11-01",
+    "branch": "ricardo-datascientist"
+  }
+}
