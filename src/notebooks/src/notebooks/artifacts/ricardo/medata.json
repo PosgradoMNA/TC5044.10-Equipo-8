@@ -1,0 +1,16 @@
+{
+  "author": "Ricardo Miguel Aguilar Rosas",
+  "role": "Data Scientist",
+  "experiment": "Energy Efficiency – Ricardo Aguilar",
+  "dataset_relpath": "src/data/energy_efficiency_modified.csv",
+  "target": "heating_load",
+  "created_utc": "2025-11-01T00:00:00Z",
+  "branch": "ricardo-datascientist",
+  "mlflow_experiment": "Energy Efficiency – Ricardo Aguilar",
+  "models": [
+    {"name": "LinearRegression", "run_tag": "LinearRegression_Baseline"},
+    {"name": "RandomForest", "run_tag": "RandomForest_600"},
+    {"name": "GradientBoosting", "run_tag": "GradientBoosting_100"}
+  ],
+  "notes": "Artefactos individuales del DS para integrar al historial del equipo."
+}
