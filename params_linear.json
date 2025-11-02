@@ -1,0 +1,10 @@
+{
+  "model": "LinearRegression",
+  "params": {
+    "fit_intercept": true,
+    "normalize": false
+  },
+  "data": {
+    "cv_folds": 5
+  }
+}

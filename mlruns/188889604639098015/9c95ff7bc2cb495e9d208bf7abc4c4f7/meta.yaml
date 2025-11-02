@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ricardoaguilar/Desktop/TC5044.10-Equipo-8/src/notebooks/TC5044.10-Equipo-8/mlruns/188889604639098015/9c95ff7bc2cb495e9d208bf7abc4c4f7/artifacts
+end_time: 1762081146490
+entry_point_name: ''
+experiment_id: '188889604639098015'
+lifecycle_stage: active
+run_id: 9c95ff7bc2cb495e9d208bf7abc4c4f7
+run_name: Linear Regression
+run_uuid: 9c95ff7bc2cb495e9d208bf7abc4c4f7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762081142034
+status: 3
+tags: []
+user_id: ricardoaguilar

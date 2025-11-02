@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ricardoaguilar/Desktop/TC5044.10-Equipo-8/src/notebooks/TC5044.10-Equipo-8/mlruns/188889604639098015/86ba8493e65342cc81bc92972b7e719d/artifacts
+end_time: 1762081196193
+entry_point_name: ''
+experiment_id: '188889604639098015'
+lifecycle_stage: active
+run_id: 86ba8493e65342cc81bc92972b7e719d
+run_name: Gradient Boosting
+run_uuid: 86ba8493e65342cc81bc92972b7e719d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762081191948
+status: 3
+tags: []
+user_id: ricardoaguilar

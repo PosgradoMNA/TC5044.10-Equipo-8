@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ricardoaguilar/Desktop/TC5044.10-Equipo-8/src/notebooks/TC5044.10-Equipo-8/mlruns/188889604639098015/75569a467b894917b3492574ab6ae879/artifacts
+end_time: 1762081188105
+entry_point_name: ''
+experiment_id: '188889604639098015'
+lifecycle_stage: active
+run_id: 75569a467b894917b3492574ab6ae879
+run_name: Random Forest
+run_uuid: 75569a467b894917b3492574ab6ae879
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762081182005
+status: 3
+tags: []
+user_id: ricardoaguilar

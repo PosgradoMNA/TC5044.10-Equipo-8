@@ -210,4 +210,4 @@ __marimo__/
 .vscode/
 
 # Data
-*.csv 
+*.csv mlruns/*/*/artifacts/
