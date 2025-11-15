@@ -44,6 +44,25 @@ git add data/processed/energy_efficiency_modified.csv.dvc
 git commit -m "Update processed data"
 ```
 
+### 7. Run Tests
+```bash
+make test
+```
+
+## Testing
+
+### Quick Test Execution
+```bash
+make test                 # Run all tests
+make test_unit           # Unit tests only  
+make test_integration    # Integration tests only
+```
+
+### Test Coverage
+- **Unit Tests**: DataLoader, DataPreprocessor, ModelTrainer, ModelEvaluator
+- **Integration Tests**: End-to-end pipeline validation
+- **Documentation**: See [TESTING.md](TESTING.md) for detailed testing guide
+
 ## Automated Workflow
 
 ### Full Pipeline (Recommended)

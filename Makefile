@@ -46,6 +46,10 @@ sync_data_to_s3:
 pipeline: sync_data_from_s3
 	$(PYTHON_INTERPRETER) -m energy_efficiency.main
 	$(PYTHON_INTERPRETER) -m dvc push
+	@echo "Running unit tests..."
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py -q
+	@echo "Running integration tests..."
+	$(PYTHON_INTERPRETER) -m pytest tests/test_integration.py -q
 	@echo "Pipeline complete! Starting MLflow UI..."
 	@echo "Open http://127.0.0.1:5000 in your browser"
 	mlflow ui --backend-store-uri ./mlruns --host 127.0.0.1 --port 5000
@@ -53,6 +57,10 @@ pipeline: sync_data_from_s3
 ## Quick pipeline without S3 sync
 pipeline_local:
 	$(PYTHON_INTERPRETER) -m energy_efficiency.main
+	@echo "Running unit tests..."
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py -q
+	@echo "Running integration tests..."
+	$(PYTHON_INTERPRETER) -m pytest tests/test_integration.py -q
 	@echo "Pipeline complete! Starting MLflow UI..."
 	@echo "Open http://127.0.0.1:5000 in your browser"
 	mlflow ui --backend-store-uri ./mlruns --host 127.0.0.1 --port 5000
@@ -77,3 +85,19 @@ help:
 ## Start MLflow UI
 mlflow_ui:
 	mlflow ui --backend-store-uri ./mlruns
+
+## Run all tests
+test:
+	$(PYTHON_INTERPRETER) -m pytest -q
+
+## Run unit tests only
+test_unit:
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py -q
+
+## Run integration tests only
+test_integration:
+	$(PYTHON_INTERPRETER) -m pytest tests/test_integration.py -q
+
+## Run tests with coverage
+test_coverage:
+	$(PYTHON_INTERPRETER) -m pytest --cov=energy_efficiency --cov-report=html
