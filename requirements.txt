@@ -6,3 +6,6 @@ scikit-learn==1.7.2
 dvc==3.63.0
 mlflow==3.5.1
 pytest==8.3.3
+fastapi==0.115.6
+uvicorn==0.32.1
+httpx==0.28.1

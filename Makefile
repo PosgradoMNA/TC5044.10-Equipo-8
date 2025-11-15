@@ -47,7 +47,7 @@ pipeline: sync_data_from_s3
 	$(PYTHON_INTERPRETER) -m energy_efficiency.main
 	$(PYTHON_INTERPRETER) -m dvc push
 	@echo "Running unit tests..."
-	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py -q
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py -q
 	@echo "Running integration tests..."
 	$(PYTHON_INTERPRETER) -m pytest tests/test_integration.py -q
 	@echo "Pipeline complete! Starting MLflow UI..."
@@ -58,7 +58,7 @@ pipeline: sync_data_from_s3
 pipeline_local:
 	$(PYTHON_INTERPRETER) -m energy_efficiency.main
 	@echo "Running unit tests..."
-	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py -q
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py -q
 	@echo "Running integration tests..."
 	$(PYTHON_INTERPRETER) -m pytest tests/test_integration.py -q
 	@echo "Pipeline complete! Starting MLflow UI..."
@@ -92,7 +92,7 @@ test:
 
 ## Run unit tests only
 test_unit:
-	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py -q
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py -q
 
 ## Run integration tests only
 test_integration:
@@ -101,3 +101,11 @@ test_integration:
 ## Run tests with coverage
 test_coverage:
 	$(PYTHON_INTERPRETER) -m pytest --cov=energy_efficiency --cov-report=html
+
+## Start FastAPI server
+serve:
+	$(PYTHON_INTERPRETER) -m energy_efficiency.serve
+
+## Start FastAPI server with custom host/port
+serve_custom:
+	$(PYTHON_INTERPRETER) -c "from energy_efficiency.serve import start_server; start_server('0.0.0.0', 8000)"

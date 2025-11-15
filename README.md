@@ -49,6 +49,11 @@ git commit -m "Update processed data"
 make test
 ```
 
+### 8. Start API Server
+```bash
+make serve
+```
+
 ## Testing
 
 ### Quick Test Execution
@@ -180,3 +185,88 @@ The MLflow UI shows:
 2. MLflow UI will automatically open at: **http://localhost:5000**
 3. Browse experiments and compare model performance
 4. Press `Ctrl+C` in terminal to stop the UI server
+
+## FastAPI Model Serving
+
+### Start API Server
+```bash
+make serve                # Start on localhost:8000
+make serve_custom         # Start on 0.0.0.0:8000 (external access)
+```
+
+### API Endpoints
+- **GET** `/` - API status
+- **GET** `/health` - Health check and model status
+- **POST** `/predict` - Make predictions
+- **GET** `/model-info` - Model metadata
+- **GET** `/docs` - Interactive API documentation (Swagger UI)
+
+### Model Artifacts
+- **Model Path**: `mlruns/experiments/<experiment_id>/runs/<run_id>/artifacts/model`
+- **Model Type**: RandomForest Pipeline (scikit-learn)
+- **Model Version**: Latest from MLflow experiment "energy_efficiency_models"
+
+### API Usage Example
+```python
+import requests
+
+# Sample prediction request (uses RandomForest by default)
+data = {
+    "relative_compactness": 0.8,
+    "surface_area": 650.0,
+    "wall_area": 300.0,
+    "roof_area": 150.0,
+    "overall_height": 5.0,
+    "orientation": 3,
+    "glazing_area": 0.25,
+    "glazing_area_distribution": 2
+}
+
+response = requests.post("http://127.0.0.1:8000/predict", json=data)
+print(response.json())
+# Output: {"heating_load": 15.2, "cooling_load": 18.7, "model_used": "RandomForest"}
+
+# Use a different model
+response = requests.post("http://127.0.0.1:8000/predict?model_name=LinearRegression", json=data)
+print(response.json())
+# Output: {"heating_load": 14.8, "cooling_load": 17.3, "model_used": "LinearRegression"}
+```
+
+### Model Selection
+The API supports multiple models. You can specify which model to use with the `model_name` query parameter:
+
+**Available Models:**
+- `RandomForest` (default)
+- `LinearRegression` 
+- `GradientBoosting`
+
+**Usage:**
+```bash
+# Use default RandomForest model
+curl -X POST "http://127.0.0.1:8000/predict" -H "Content-Type: application/json" -d '{...}'
+
+# Use LinearRegression model
+curl -X POST "http://127.0.0.1:8000/predict?model_name=LinearRegression" -H "Content-Type: application/json" -d '{...}'
+
+# Use GradientBoosting model
+curl -X POST "http://127.0.0.1:8000/predict?model_name=GradientBoosting" -H "Content-Type: application/json" -d '{...}'
+```
+
+### Input Schema
+| Field | Type | Range | Description |
+|-------|------|-------|-------------|
+| relative_compactness | float | 0.6-1.0 | Building relative compactness |
+| surface_area | float | 500-900 | Surface area in m² |
+| wall_area | float | 200-400 | Wall area in m² |
+| roof_area | float | 100-250 | Roof area in m² |
+| overall_height | float | 3-7 | Overall height in meters |
+| orientation | int | 2-5 | Building orientation |
+| glazing_area | float | 0-0.4 | Glazing area ratio |
+| glazing_area_distribution | int | 0-5 | Glazing area distribution |
+
+### Output Schema
+| Field | Type | Description |
+|-------|------|-------------|
+| heating_load | float | Predicted heating load |
+| cooling_load | float | Predicted cooling load |
+| model_used | string | Model used for prediction |
