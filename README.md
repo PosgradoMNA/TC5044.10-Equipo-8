@@ -307,3 +307,36 @@ docker run -p 8000:8000 <your-dockerhub-username>/energy-efficiency-api:latest
 - **Models**: Pre-loaded MLflow models included
 - **Dependencies**: All requirements pinned and cached
 - **Size**: Optimized with .dockerignore and multi-stage potential
+
+## Data Drift Monitoring
+
+### Run Drift Detection
+```bash
+make drift_monitor
+```
+
+### Drift Scenarios
+The system simulates 4 drift scenarios:
+- **Efficiency Improvement**: Buildings become more compact with increased glazing
+- **Orientation Corruption**: Missing orientation data (all buildings same orientation)
+- **Winter Buildings**: Seasonal changes with taller buildings and more wall area
+- **New Building Types**: Extreme drift with different building characteristics
+
+### Alert Thresholds
+- **R² Drop**: Alert if R² decreases by >10%
+- **RMSE Increase**: Alert if RMSE increases by >20%
+- **Statistical Drift**: KS-test p-value <0.05
+
+### Monitoring Output
+- **Statistical Drift**: Kolmogorov-Smirnov test results per feature
+- **Performance Impact**: Model degradation metrics
+- **Alert Status**: Threshold-based alerts for each model
+- **Recommendations**: Automated action suggestions
+- **Visualizations**: Feature distribution comparisons saved to `reports/figures/`
+
+### Recommended Actions
+When drift is detected:
+1. **Retrain models** with recent data
+2. **Review feature pipeline** for data quality issues
+3. **Collect more data** from new distribution
+4. **Update preprocessing** steps if needed

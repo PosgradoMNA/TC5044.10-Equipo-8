@@ -47,7 +47,7 @@ pipeline: sync_data_from_s3
 	$(PYTHON_INTERPRETER) -m energy_efficiency.main
 	$(PYTHON_INTERPRETER) -m dvc push
 	@echo "Running unit tests..."
-	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py -q
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py tests/test_drift_monitor.py -q
 	@echo "Running integration tests..."
 	$(PYTHON_INTERPRETER) -m pytest tests/test_integration.py -q
 	@echo "Pipeline complete! Starting MLflow UI..."
@@ -58,7 +58,7 @@ pipeline: sync_data_from_s3
 pipeline_local:
 	$(PYTHON_INTERPRETER) -m energy_efficiency.main
 	@echo "Running unit tests..."
-	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py -q
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py tests/test_drift_monitor.py -q
 	@echo "Running integration tests..."
 	$(PYTHON_INTERPRETER) -m pytest tests/test_integration.py -q
 	@echo "Pipeline complete! Starting MLflow UI..."
@@ -92,7 +92,7 @@ test:
 
 ## Run unit tests only
 test_unit:
-	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py -q
+	$(PYTHON_INTERPRETER) -m pytest tests/test_dataset.py tests/test_features.py tests/test_modeling.py tests/test_api.py tests/test_drift_monitor.py -q
 
 ## Run integration tests only
 test_integration:
@@ -121,3 +121,7 @@ docker_run:
 ## Build and run with docker-compose
 docker_compose:
 	docker-compose up --build
+
+## Run drift monitoring
+drift_monitor:
+	$(PYTHON_INTERPRETER) -m energy_efficiency.run_drift_monitoring

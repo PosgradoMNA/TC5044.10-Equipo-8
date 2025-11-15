@@ -73,7 +73,7 @@ The API automatically loads the latest RandomForest model from:
 
 ## Input Validation
 
-The API includes comprehensive input validation:
+The API includes input validation:
 - **Range validation**: All numeric fields have min/max constraints
 - **Type validation**: Ensures correct data types (float/int)
 - **Required fields**: All 8 building features are mandatory

@@ -8,7 +8,7 @@ class VisualEDA:
 
     def overview(self):
         """
-        Display comprehensive DataFrame information including structure, statistics, and missing values.
+        Display DataFrame information including structure, statistics, and missing values.
         """
         print(f"\nCurrent dataframe data:", "\n")
         print(f"\n\tDataframe information:", "\n")

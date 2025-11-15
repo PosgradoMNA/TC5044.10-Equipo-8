@@ -1,7 +1,7 @@
 # Testing Guide
 
 ## Overview
-This project includes comprehensive unit and integration tests to validate critical components and end-to-end pipeline functionality.
+This project includes unit and integration tests to validate critical components and end-to-end pipeline functionality.
 
 ## Test Structure
 ```
