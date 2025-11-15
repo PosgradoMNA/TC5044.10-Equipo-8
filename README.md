@@ -270,3 +270,40 @@ curl -X POST "http://127.0.0.1:8000/predict?model_name=GradientBoosting" -H "Con
 | heating_load | float | Predicted heating load |
 | cooling_load | float | Predicted cooling load |
 | model_used | string | Model used for prediction |
+
+## Docker Deployment
+
+### Build and Run Container
+```bash
+# Build the Docker image
+docker build -t ml-service:latest .
+
+# Run the container
+docker run -p 8000:8000 ml-service:latest
+
+# Or use Make commands
+make docker_build
+make docker_run
+
+# Or use docker-compose
+docker-compose up --build
+```
+
+### Docker Hub Registry
+The image is available on Docker Hub with versioned tags:
+
+```bash
+# Pull from Docker Hub
+docker pull <your-dockerhub-username>/energy-efficiency-api:latest
+docker pull <your-dockerhub-username>/energy-efficiency-api:v1.0.0
+
+# Run from registry
+docker run -p 8000:8000 <your-dockerhub-username>/energy-efficiency-api:latest
+```
+
+### Container Features
+- **Base Image**: Python 3.13-slim for minimal size
+- **Port**: Exposes port 8000
+- **Models**: Pre-loaded MLflow models included
+- **Dependencies**: All requirements pinned and cached
+- **Size**: Optimized with .dockerignore and multi-stage potential

@@ -1,0 +1,12 @@
+env/
+.git/
+__pycache__/
+*.pyc
+.pytest_cache/
+tests/
+notebooks/
+data/raw/
+data/interim/
+.DS_Store
+*.md
+Makefile

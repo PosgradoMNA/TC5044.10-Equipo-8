@@ -109,3 +109,15 @@ serve:
 ## Start FastAPI server with custom host/port
 serve_custom:
 	$(PYTHON_INTERPRETER) -c "from energy_efficiency.serve import start_server; start_server('0.0.0.0', 8000)"
+
+## Build Docker image
+docker_build:
+	docker build -t ml-service:latest .
+
+## Run Docker container
+docker_run:
+	docker run -p 8000:8000 ml-service:latest
+
+## Build and run with docker-compose
+docker_compose:
+	docker-compose up --build
